@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafetería UAX Chamberí - Pantalla de recogida</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <img src="img/cafeteria.jpg" alt="Logo DO EAT" class="logo" />
+
+      <div>
+        <h1>Cafetería UAX Chamberí</h1>
+        <p class="subtitle"><img src="img/bolso_b.png" alt="bolso" class="imagen_logo3" /> Pantalla de recogida</p>
+      </div>
+    </div>
+
+    <div class="clock-box">
+      <div class="clock"><img src="img/reloj_b.png" alt="Reloj" class="imagen_logo" /></div>
+      <div>
+        <p id="fecha"></p>
+        <h2 id="hora"></h2>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <section class="orders-area">
+
+      <section class="section-block">
+        <div class="section-title">
+          <div class="section-icon preparing-icon"><img src="img/gorro-de-cocinero.png" alt="Reloj" class="imagen_logo2" /></div>
+          <div>
+            <h2>Preparando</h2>
+            <p>Tu pedido se está preparando.</p>
+          </div>
+        </div>
+
+        <div id="preparando-list" class="orders-list"></div>
+      </section>
+
+      <section class="section-block_2">
+        <div class="section-title">
+          <div class="section-icon ready-icon"><img src="img/bolso.png" alt="Reloj" class="imagen_logo2" /></div>
+          <div>
+            <h2>Listos para recoger</h2>
+            <p>Acércate al mostrador con tu número de pedido.</p>
+          </div>
+        </div>
+
+        <div id="listos-list" class="orders-list"></div>
+      </section>
+
+    </section>
+
+    <aside class="info-panel">
+
+      <div class="info-block">
+        <div class="round-icon"><img src="img/notificacion_b.png" alt="campana" class="imagen_logo2" /></div>
+        <div>
+          <h3>Te avisaremos<br>cuando tu pedido esté listo.</h3>
+          <p>Estate atento a esta pantalla<br>y al sonido de aviso.</p>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="info-block">
+        <div class="round-icon"><img src="img/bolso_b.png" alt="bolso" class="imagen_logo2" /></div>
+        <div>
+          <h3>¿Cómo recoger tu pedido?</h3>
+          <ol>
+            <li>Comprueba tu número en “Listos para recoger”.</li>
+            <li>Dirígete al mostrador y menciona tu número.</li>
+            <li>¡Disfruta de tu comida!</li>
+          </ol>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="info-block">
+        <div class="round-icon"><img src="img/reloj_b.png" alt="Reloj" class="imagen_logo2" /></div>
+        <div>
+          <h3>Horario de recogida</h3>
+          <p>
+            Lunes a viernes<br>
+            <strong>8:00 – 16:00</strong>
+          </p>
+          <p>
+            Sábados, domingos y festivos<br>
+            <strong>Cerrado</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="thanks-box">
+        <div class="heart">♡</div>
+        <div>
+          <h3>Gracias por elegir DO EAT!</h3>
+          <p>Comer bien también es rendir mejor.<br>Que tengas un gran día.</p>
+        </div>
+        <img src="img/cafeteria.jpg" alt="Logo DO EAT" class="small-logo" />
+      </div>
+
+    </aside>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-item2">
+      <span><img src="img/localizar_b.png" alt="localizar_b" class="imagen_logo2" /></span>
+      <div>
+        <strong>Recogida en Cafetería UAX Chamberí</strong>
+        <p>Campus Chamberí, C/ Arapiles, 13, 28015 Madrid</p>
+      </div>
+    </div>
+
+    <div class="footer-item2">
+      <span><img src="img/reloj_b.png" alt="reloj_b" class="imagen_logo2" /></span>
+      <div>
+        <strong>Tiempo estimado de preparación</strong>
+        <p>10–15 min</p>
+      </div>
+    </div>
+
+    <div class="footer-item">
+      <span>?</span>
+      <div>
+        <strong>¿Alguna duda?</strong>
+        <p>Pregunta a nuestro equipo en el mostrador.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
