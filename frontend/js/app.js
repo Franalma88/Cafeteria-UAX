@@ -58,7 +58,6 @@ function renderizarPedidos() {
   listosList.innerHTML = pedidosListos
     .map(pedido => crearPedidoHTML(pedido, "listo"))
     .join("");
-    reproducir();
 }
 
 function convertirProductosATexto(productos) {
