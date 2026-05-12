@@ -94,14 +94,6 @@ def procesar_pedido(pedido):
     # Nota: Los print dentro de procesos pueden salir desordenados en consola
     print(f"\n[COCINERO] Preparando Pedido #{id_pedido} ({tiempo_estimado} min)")
 
-    # Retornamos el estado inicial para que el hilo principal lo publique
-    evento_preparando = {
-        "id": id_pedido, "alumno": alumno, "facultad": facultad,
-        "productos": productos_cocina, "estado": "PREPARANDO",
-        "tiempo": f"En {tiempo_estimado} min",
-        "nutricion": nutricion 
-    }
-    
     # Simulamos el trabajo del cocinero
     time.sleep(tiempo_estimado)
 
@@ -111,17 +103,14 @@ def procesar_pedido(pedido):
         "tiempo_respuesta": f"{tiempo_estimado} min",
         "nutricion": nutricion
     }
-    return (evento_preparando, evento_listo)
+    return evento_listo
 
 def gestionar_resultado(futuro):
     """Callback que recibe el resultado del proceso y lo envía al WebSocket"""
     resultado = futuro.result()
     if resultado:
-        evento_prep, evento_listo = resultado
-        publicar_evento_web(evento_prep)
-        # Como el sleep ya ocurrió en el proceso, enviamos el "Listo" inmediatamente después
-        publicar_evento_web(evento_listo)
-        print(f"[COCINA] Pedido #{evento_listo['id']} FINALIZADO por un cocinero.")
+        publicar_evento_web(resultado)
+        print(f"[COCINA] Pedido #{resultado['id']} FINALIZADO por un cocinero.")
 
 def escuchar_servidor_tcp():
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -143,13 +132,38 @@ def escuchar_servidor_tcp():
             for parte in partes[:-1]:
                 if parte.strip():
                     pedido = json.loads(parte.strip())
-                    # Enviamos el trabajo a un proceso y asignamos el callback para la respuesta
+                    productos_cocina = obtener_productos_cocina(pedido.get("productos", []))
+                    if productos_cocina:
+                        tiempo_estimado = calcular_tiempo_preparacion(productos_cocina)
+                        evento_preparando = {
+                            "id": pedido.get("id"),
+                            "alumno": pedido.get("alumno", "Alumno"),
+                            "facultad": pedido.get("facultad", "Sin facultad"),
+                            "productos": productos_cocina,
+                            "estado": "PREPARANDO",
+                            "tiempo": f"En {tiempo_estimado} min",
+                            "nutricion": pedido.get("nutricion")
+                        }
+                        publicar_evento_web(evento_preparando)
                     tarea = cocineros.submit(procesar_pedido, pedido)
                     tarea.add_done_callback(gestionar_resultado)
         else:
             try:
                 pedido = json.loads(buffer)
                 buffer = ""
+                productos_cocina = obtener_productos_cocina(pedido.get("productos", []))
+                if productos_cocina:
+                    tiempo_estimado = calcular_tiempo_preparacion(productos_cocina)
+                    evento_preparando = {
+                        "id": pedido.get("id"),
+                        "alumno": pedido.get("alumno", "Alumno"),
+                        "facultad": pedido.get("facultad", "Sin facultad"),
+                        "productos": productos_cocina,
+                        "estado": "PREPARANDO",
+                        "tiempo": f"En {tiempo_estimado} min",
+                        "nutricion": pedido.get("nutricion")
+                    }
+                    publicar_evento_web(evento_preparando)
                 tarea = cocineros.submit(procesar_pedido, pedido)
                 tarea.add_done_callback(gestionar_resultado)
             except json.JSONDecodeError:

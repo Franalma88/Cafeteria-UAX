@@ -130,7 +130,7 @@ body {
     padding: 26px;
     box-shadow: var(--shadow);*/
     /*width: 400px;*/
-    height: calc(100vh - 630px);
+    height: 300px;
     
   margin-bottom: 25px;
    overflow-y: auto; 
