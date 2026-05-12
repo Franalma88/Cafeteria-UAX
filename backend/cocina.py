@@ -83,6 +83,7 @@ def procesar_pedido(pedido):
     alumno = pedido.get("alumno", "Alumno")
     facultad = pedido.get("facultad", "Sin facultad")
     productos = pedido.get("productos", [])
+    nutricion = pedido.get("nutricion")
 
     productos_cocina = obtener_productos_cocina(productos)
     if not productos_cocina:
@@ -97,7 +98,8 @@ def procesar_pedido(pedido):
     evento_preparando = {
         "id": id_pedido, "alumno": alumno, "facultad": facultad,
         "productos": productos_cocina, "estado": "PREPARANDO",
-        "tiempo": f"En {tiempo_estimado} min"
+        "tiempo": f"En {tiempo_estimado} min",
+        "nutricion": nutricion 
     }
     
     # Simulamos el trabajo del cocinero
@@ -106,7 +108,8 @@ def procesar_pedido(pedido):
     evento_listo = {
         "id": id_pedido, "alumno": alumno, "facultad": facultad,
         "productos": productos_cocina, "estado": "LISTO",
-        "tiempo_respuesta": f"{tiempo_estimado} min"
+        "tiempo_respuesta": f"{tiempo_estimado} min",
+        "nutricion": nutricion
     }
     return (evento_preparando, evento_listo)
 

@@ -28,6 +28,7 @@ function actualizarReloj() {
 
 function crearPedidoHTML(pedido, tipo) {
   const esPreparando = tipo === "preparando";
+  const n = pedido.nutricion || { calorias: 0, proteinas: 0, carbohidratos: 0, grasas: 0 };
 
   return `
     <article class="order-card ${esPreparando ? "preparing" : "ready"}">
@@ -41,6 +42,12 @@ function crearPedidoHTML(pedido, tipo) {
       <div class="order-info">
         <h3>${pedido.alumno}</h3>
         <p>${pedido.productos}</p>
+      <div class="nutri-info">
+          <span>🔥 ${n.calorias} kcal</span>
+          <span>🥩 P: ${n.proteinas}g</span>
+          <span>🍞 C: ${n.carbohidratos}g</span>
+          <span>🥑 G: ${n.grasas}g</span>
+        </div>
       </div>
 
       <div class="badge ${esPreparando ? "badge-time" : "badge-ready"}">
@@ -73,7 +80,8 @@ function procesarEventoCocina(evento) {
     id: evento.id,
     alumno: evento.alumno || "Alumno",
     productos: convertirProductosATexto(evento.productos || ""),
-    tiempo: evento.tiempo || "En 10–15 min"
+    tiempo: evento.tiempo || "En 10–15 min",
+    nutricion: evento.nutricion
   };
 
   const estado = evento.estado;

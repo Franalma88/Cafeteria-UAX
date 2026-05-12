@@ -16,41 +16,49 @@ facultades = [
     "Educación", "Enfermería", "ADE"
 ]
 
-productos = [
-    ("Café solo", "barra", 1.20),
-    ("Café con leche", "barra", 1.50),
-    ("Colacao", "barra", 1.60),
-    ("Zumo de naranja", "barra", 2.00),
-    ("Tostada", "cocina", 1.80),
-    ("Bocadillo de tortilla", "cocina", 3.50),
-    ("Bocadillo de jamón", "cocina", 3.80),
-    ("Menú del día", "cocina", 7.50),
-    ("Agua", "barra", 1.00),
-    ("Refresco", "barra", 1.80)
-]
+
+productos = {
+    "Café solo": {"tipo": "barra", "precio": 1.20, "kcal": 2, "prot": 0.1, "carb": 0, "grasas": 0},
+    "Café con leche": {"tipo": "barra", "precio": 1.50, "kcal": 65, "prot": 3.4, "carb": 4.8, "grasas": 3.6},
+    "Colacao": {"tipo": "barra", "precio": 1.60, "kcal": 150, "prot": 5, "carb": 25, "grasas": 2.5},
+    "Zumo de naranja": {"tipo": "barra", "precio": 2.00, "kcal": 90, "prot": 1.4, "carb": 20, "grasas": 0.2},
+    "Tostada": {"tipo": "cocina", "precio": 1.80, "kcal": 210, "prot": 6, "carb": 32, "grasas": 5},
+    "Bocadillo de tortilla": {"tipo": "cocina", "precio": 3.50, "kcal": 550, "prot": 18, "carb": 45, "grasas": 30},
+    "Bocadillo de jamón": {"tipo": "cocina", "precio": 3.80, "kcal": 420, "prot": 28, "carb": 38, "grasas": 12},
+    "Menú del día": {"tipo": "cocina", "precio": 7.50, "kcal": 950, "prot": 45, "carb": 85, "grasas": 35},
+    "Agua": {"tipo": "barra", "precio": 1.00, "kcal": 0, "prot": 0, "carb": 0, "grasas": 0},
+    "Refresco": {"tipo": "barra", "precio": 1.80, "kcal": 140, "prot": 0, "carb": 35, "grasas": 0}
+}
 
 
 def generar_pedido(id_pedido):
-    num_productos = random.randint(1, 3)
-    seleccionados = random.sample(productos, num_productos)
+    nombres = list(productos.keys())
+    seleccionados = random.sample(nombres, random.randint(1, 3))
 
-    lista_productos = [p[0] for p in seleccionados]
-    total = sum(p[2] for p in seleccionados)
+    total, kcal, prot, carb, grasas = 0, 0, 0, 0, 0
+    necesita_cocina = False
 
-    necesita_cocina = any(p[1] == "cocina" for p in seleccionados)
-    destino = "cocina" if necesita_cocina else "barra"
+    for n in seleccionados:
+        p = productos[n]
+        total += p["precio"]
+        kcal += p["kcal"]
+        prot += p["prot"]
+        carb += p["carb"]
+        grasas += p["grasas"]
+        if p["tipo"] == "cocina": necesita_cocina = True
 
-    pedido = {
+    return {
         "id": id_pedido,
         "alumno": random.choice(alumnos),
         "facultad": random.choice(facultades),
-        "productos": lista_productos,
-        "destino": destino,
+        "productos": seleccionados,
+        "destino": "cocina" if necesita_cocina else "barra",
+        "nutricion": {
+            "calorias": kcal, "proteinas": round(prot, 1), 
+            "carbohidratos": round(carb, 1), "grasas": round(grasas, 1)
+        },
         "total": round(total, 2)
     }
-
-    return pedido
-
 
 def main():
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
