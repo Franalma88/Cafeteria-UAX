@@ -4,7 +4,8 @@ import asyncio
 import threading
 import time
 import websockets
-from concurrent.futures import ProcessPoolExecutor  
+from concurrent.futures import ProcessPoolExecutor
+from menu_loader import load_menu
 
 HOST_SERVIDOR = "127.0.0.1"
 PUERTO_SERVIDOR = 5000
@@ -15,17 +16,28 @@ PUERTO_WEBSOCKET = 8765
 clientes_web = set()
 loop_websocket = None
 
-PRODUCTOS_COCINA = {
+MENU = load_menu()
+TIEMPOS_MANUALES = {
     "Tostada con tomate": 4,
     "Tostada": 4,
     "Bocadillo de tortilla": 7,
     "Bocadillo de jamón": 6,
     "Bocadillo vegetal": 6,
+    "Tortilla de patatas": 8,
+    "Ensalada César": 6,
     "Menú del día": 12,
-    "Pasta": 10,
-    "Ensalada": 5,
-    "Croissant mixto": 4
+    "Croissant mixto": 4,
+    "Yogur con granola": 3,
+    "Brownie": 2
 }
+
+PRODUCTOS_COCINA = {}
+for nombre, info in MENU.items():
+    if info["tipo"] != "barra":
+        PRODUCTOS_COCINA[nombre] = TIEMPOS_MANUALES.get(
+            nombre,
+            4 if info["tipo"] == "postre" else 8
+        )
 
 def calcular_tiempo_preparacion(productos_cocina):
     if not productos_cocina:

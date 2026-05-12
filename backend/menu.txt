@@ -1,0 +1,20 @@
+nombre|tipo|precio|kcal|prot|carb|grasas
+Café solo|barra|1.20|2|0.1|0|0
+Café con leche|barra|1.50|65|3.4|4.8|3.6
+Colacao|barra|1.60|150|5|25|2.5
+Zumo de naranja|barra|2.00|90|1.4|20|0.2
+Agua|barra|1.00|0|0|0|0
+Refresco|barra|1.80|140|0|35|0
+Agua con gas|barra|1.10|0|0|0|0
+Fruta fresca|barra|1.50|80|1.2|18|0.2
+Tostada|cocina|1.80|210|6|32|5
+Tostada con tomate|cocina|2.20|230|7|34|6
+Bocadillo de tortilla|cocina|3.50|550|18|45|30
+Bocadillo de jamón|cocina|3.80|420|28|38|12
+Bocadillo vegetal|cocina|3.90|360|10|42|14
+Tortilla de patatas|cocina|4.50|680|20|45|50
+Ensalada César|cocina|4.90|320|12|20|18
+Menú del día|cocina|7.50|950|45|85|35
+Croissant mixto|cocina|2.90|380|8|38|20
+Yogur con granola|postre|2.50|210|7|34|7
+Brownie|postre|2.90|430|5|55|22

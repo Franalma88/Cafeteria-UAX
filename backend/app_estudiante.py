@@ -2,9 +2,12 @@ import socket
 import json
 import time
 import random
+from menu_loader import load_menu
 
 HOST = "127.0.0.1"
 PORT = 5000
+
+MENU = load_menu()
 
 alumnos = [
     "Laura", "Mario", "Sofía", "Carlos", "Lucía",
@@ -17,35 +20,22 @@ facultades = [
 ]
 
 
-productos = {
-    "Café solo": {"tipo": "barra", "precio": 1.20, "kcal": 2, "prot": 0.1, "carb": 0, "grasas": 0},
-    "Café con leche": {"tipo": "barra", "precio": 1.50, "kcal": 65, "prot": 3.4, "carb": 4.8, "grasas": 3.6},
-    "Colacao": {"tipo": "barra", "precio": 1.60, "kcal": 150, "prot": 5, "carb": 25, "grasas": 2.5},
-    "Zumo de naranja": {"tipo": "barra", "precio": 2.00, "kcal": 90, "prot": 1.4, "carb": 20, "grasas": 0.2},
-    "Tostada": {"tipo": "cocina", "precio": 1.80, "kcal": 210, "prot": 6, "carb": 32, "grasas": 5},
-    "Bocadillo de tortilla": {"tipo": "cocina", "precio": 3.50, "kcal": 550, "prot": 18, "carb": 45, "grasas": 30},
-    "Bocadillo de jamón": {"tipo": "cocina", "precio": 3.80, "kcal": 420, "prot": 28, "carb": 38, "grasas": 12},
-    "Menú del día": {"tipo": "cocina", "precio": 7.50, "kcal": 950, "prot": 45, "carb": 85, "grasas": 35},
-    "Agua": {"tipo": "barra", "precio": 1.00, "kcal": 0, "prot": 0, "carb": 0, "grasas": 0},
-    "Refresco": {"tipo": "barra", "precio": 1.80, "kcal": 140, "prot": 0, "carb": 35, "grasas": 0}
-}
-
-
 def generar_pedido(id_pedido):
-    nombres = list(productos.keys())
+    nombres = list(MENU.keys())
     seleccionados = random.sample(nombres, random.randint(1, 3))
 
     total, kcal, prot, carb, grasas = 0, 0, 0, 0, 0
     necesita_cocina = False
 
     for n in seleccionados:
-        p = productos[n]
+        p = MENU[n]
         total += p["precio"]
         kcal += p["kcal"]
         prot += p["prot"]
         carb += p["carb"]
         grasas += p["grasas"]
-        if p["tipo"] == "cocina": necesita_cocina = True
+        if p["tipo"] != "barra":
+            necesita_cocina = True
 
     return {
         "id": id_pedido,
